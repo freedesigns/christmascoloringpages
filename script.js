@@ -14,6 +14,17 @@ document.addEventListener('DOMContentLoaded', () => {
         'santa-claus-christmas-coloring-pages (1).jpeg',
         'santa-claus-christmas-coloring-pages (2).jpeg',
         'santa-claus-christmas-coloring-pages (3).jpeg',
+        'santa-claus-christmas-coloring-pages (4).jpeg',
+        'santa-claus-christmas-coloring-pages (5).jpeg',
+        'santa-claus-christmas-coloring-pages (6).jpeg',
+        'santa-claus-christmas-coloring-pages (7).jpeg',
+        'santa-claus-christmas-coloring-pages (8).jpeg',
+        'santa-claus-christmas-coloring-pages (9).jpeg',
+        'santa-claus-christmas-coloring-pages (10).jpeg',
+        'merry-christmas-coloring-pages (1).jpeg',
+        'merry-christmas-coloring-pages (2).jpeg',
+        'merry-christmas-coloring-pages (3).jpeg',
+        'merry-christmas-coloring-pages (4).jpeg',
         // Add all your image filenames here
     ];
 
