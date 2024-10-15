@@ -9,6 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const imagesPerLoad = 9; // 3 images in 3 rows
     const emojis = ['🎄', '🎅', '❄️', '⛄', '🎁', '✨', '🦌', '🍪', '🥛', '🌟'];
 
+    // List of image filenames
+    const imageFilenames = [
+        'santa-claus-christmas-coloring-pages (1).jpeg',
+        'santa-claus-christmas-coloring-pages (2).jpeg',
+        'santa-claus-christmas-coloring-pages (3).jpeg',
+        // Add all your image filenames here
+    ];
+
     // Preload images for better performance
     function preloadImage(url) {
         return new Promise((resolve) => {
@@ -22,10 +30,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to load images
     async function loadImages() {
         const fragment = document.createDocumentFragment();
+        const totalImages = imageFilenames.length;
+        const endIndex = Math.min(imagesLoaded + imagesPerLoad, totalImages);
 
-        for (let i = imagesLoaded + 1; i <= imagesLoaded + imagesPerLoad; i++) {
-            let imgName = `merry-christmas-coloring-pages${i}`;
-            let imgSrc = `images/${imgName}.jpg`;
+        for (let i = imagesLoaded; i < endIndex; i++) {
+            const imgFilename = imageFilenames[i];
+            const imgSrc = `images/${imgFilename}`;
 
             // Preload image
             await preloadImage(imgSrc);
@@ -39,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Create image element
             const img = document.createElement('img');
             img.src = imgSrc;
-            img.alt = imgName.replace(/-\d+$/, '').replace(/-/g, ' ');
+            img.alt = generateAltText(imgFilename);
             img.setAttribute('itemprop', 'contentUrl');
             img.loading = 'lazy';
 
@@ -64,8 +74,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.open(imgSrc, '_blank');
             };
 
-            // Append elements
+            // Download PDF button
+            const downloadPdfBtn = document.createElement('button');
+            downloadPdfBtn.innerHTML = '<i class="fas fa-file-pdf"></i> PDF';
+            downloadPdfBtn.onclick = () => {
+                // Generate PDF from image
+                generatePDF(imgSrc, imgFilename.replace('.jpeg', '.pdf'));
+            };
+
+            // Append buttons
             buttonsDiv.appendChild(downloadImgBtn);
+            buttonsDiv.appendChild(downloadPdfBtn);
+
+            // Append elements
             card.appendChild(img);
             card.appendChild(emojiDiv);
             card.appendChild(buttonsDiv);
@@ -74,6 +95,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
         gallery.appendChild(fragment);
         imagesLoaded += imagesPerLoad;
+
+        // Disable Load More button if all images are loaded
+        if (imagesLoaded >= totalImages) {
+            loadMoreButton.style.display = 'none';
+        }
+    }
+
+    // Function to generate alt text from filename
+    function generateAltText(filename) {
+        return filename
+            .replace(/\(\d+\)\.jpeg$/, '')
+            .replace(/-/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+    }
+
+    // Function to generate PDF from image
+    function generatePDF(imageUrl, pdfName) {
+        const doc = new jsPDF({
+            orientation: 'portrait',
+            unit: 'px',
+            format: [1000, 1000]
+        });
+        doc.addImage(imageUrl, 'JPEG', 0, 0, 1000, 1000);
+        doc.save(pdfName);
+    }
+
+    // Include jsPDF library
+    if (typeof jsPDF === 'undefined') {
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+        script.onload = () => {
+            window.jsPDF = window.jspdf.jsPDF;
+        };
+        document.head.appendChild(script);
     }
 
     // Initial load with requestIdleCallback for better INP
