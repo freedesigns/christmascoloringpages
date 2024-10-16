@@ -43,8 +43,8 @@ main {
 
 .card {
     background-color: rgba(255, 255, 255, 0.9);
-    width: 300px; /* Display width */
-    height: 300px; /* Maintain aspect ratio for display */
+    width: 300px; /* Adjust width for better display */
+    height: auto; /* Maintain height based on content */
     margin: 1%;
     border-radius: 8px;
     overflow: hidden;
@@ -58,15 +58,17 @@ main {
 }
 
 .card img {
-    width: 100%;
+    width: 100%; /* Ensure image fills the card */
     height: auto; /* Maintain aspect ratio */
     display: block;
 }
 
+/* Buttons Styling */
 .card .buttons {
     display: flex;
     justify-content: space-around;
     padding: 10px;
+    margin-top: 10px; /* Add margin for spacing */
 }
 
 .card .buttons button {
@@ -79,6 +81,8 @@ main {
     font-weight: bold;
     flex: 1;
     margin: 0 5px;
+    font-size: 0.9em;
+    transition: background-color 0.2s;
 }
 
 .card .buttons button:hover {
@@ -107,6 +111,7 @@ main {
     border-radius: 4px;
     font-size: 1.2em;
     font-weight: bold;
+    transition: background-color 0.2s;
 }
 
 .load-more-container button:hover {
