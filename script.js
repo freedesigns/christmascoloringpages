@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentYearSpan = document.getElementById('currentYear');
     currentYearSpan.textContent = new Date().getFullYear();
 
-    
     let imagesLoaded = 0;
     const imagesPerLoad = 9; // 3 images in 3 rows
     const emojis = ['🎄', '🎅', '❄️', '⛄', '🎁', '✨', '🦌', '🍪', '🥛', '🌟'];
@@ -28,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add all your image filenames here
     ];
 
-    // Preload images for better performance
+    // Preload critical images for faster LCP
     function preloadImage(url) {
         return new Promise((resolve) => {
             const img = new Image();
@@ -38,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Function to load images
+    // Function to load images and avoid layout shifts
     async function loadImages() {
         const fragment = document.createDocumentFragment();
         const totalImages = imageFilenames.length;
@@ -62,9 +61,11 @@ document.addEventListener('DOMContentLoaded', () => {
             img.src = imgSrc;
             img.alt = generateAltText(imgFilename);
             img.setAttribute('itemprop', 'contentUrl');
-            img.loading = 'lazy';
-            img.width = 1000; // Keep the original dimensions
-            img.height = 1000; // Keep the original dimensions
+            img.loading = 'lazy'; // Keep lazy loading for off-screen images
+
+            // Set explicit width and height to prevent layout shifts
+            img.width = 1000; // Original dimensions
+            img.height = 1000; // Original dimensions
 
             // Use placeholder if image not found
             img.onerror = function() {
@@ -82,14 +83,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Download Image button
             const downloadImgBtn = document.createElement('button');
-            downloadImgBtn.innerHTML = '<i class="fas fa-download"></i> Image';
+            downloadImgBtn.textContent = 'Download Image';
             downloadImgBtn.onclick = () => {
                 window.open(imgSrc, '_blank');
             };
 
             // Download PDF button
             const downloadPdfBtn = document.createElement('button');
-            downloadPdfBtn.innerHTML = '<i class="fas fa-file-pdf"></i> PDF';
+            downloadPdfBtn.textContent = 'Download PDF';
             downloadPdfBtn.onclick = () => {
                 // Generate PDF from image
                 generatePDF(imgSrc, imgFilename.replace('.jpeg', '.pdf'));
@@ -145,9 +146,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.head.appendChild(script);
     }
 
-    // Initial load with requestIdleCallback for better INP
+    // Initial load using requestAnimationFrame or fallback
     if ('requestIdleCallback' in window) {
         requestIdleCallback(loadImages);
+    } else if ('requestAnimationFrame' in window) {
+        requestAnimationFrame(loadImages);
     } else {
         setTimeout(loadImages, 1);
     }
