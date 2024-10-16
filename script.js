@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentYearSpan = document.getElementById('currentYear');
     currentYearSpan.textContent = new Date().getFullYear();
 
+    
     let imagesLoaded = 0;
     const imagesPerLoad = 9; // 3 images in 3 rows
     const emojis = ['🎄', '🎅', '❄️', '⛄', '🎁', '✨', '🦌', '🍪', '🥛', '🌟'];
