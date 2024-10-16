@@ -1,7 +1,7 @@
 /* Critical CSS for Above-the-Fold Content */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-image: url('images/background.jpg');
+    background-image: url('img/background.jpg');
     background-size: cover;
     background-attachment: fixed;
     color: #333;
@@ -13,7 +13,7 @@ header {
     color: #fff;
     padding: 40px 0;
     text-align: center;
-    background-image: url('images/header-bg.png');
+    background-image: url('img/header-bg.png');
     background-size: cover;
     background-position: center;
 }
@@ -43,7 +43,8 @@ main {
 
 .card {
     background-color: rgba(255, 255, 255, 0.9);
-    width: 30%;
+    width: 300px; /* Display width */
+    height: 300px; /* Maintain aspect ratio for display */
     margin: 1%;
     border-radius: 8px;
     overflow: hidden;
@@ -58,7 +59,7 @@ main {
 
 .card img {
     width: 100%;
-    height: auto;
+    height: auto; /* Maintain aspect ratio */
     display: block;
 }
 
