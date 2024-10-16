@@ -1,4 +1,3 @@
-// Optimize script execution using async functions and requestIdleCallback
 document.addEventListener('DOMContentLoaded', () => {
     const gallery = document.getElementById('gallery');
     const loadMoreButton = document.getElementById('loadMore');
@@ -46,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         for (let i = imagesLoaded; i < endIndex; i++) {
             const imgFilename = imageFilenames[i];
-            const imgSrc = `images/${imgFilename}`;
+            const imgSrc = `img/${imgFilename}`;
 
             // Preload image
             await preloadImage(imgSrc);
@@ -63,10 +62,12 @@ document.addEventListener('DOMContentLoaded', () => {
             img.alt = generateAltText(imgFilename);
             img.setAttribute('itemprop', 'contentUrl');
             img.loading = 'lazy';
+            img.width = 1000; // Keep the original dimensions
+            img.height = 1000; // Keep the original dimensions
 
             // Use placeholder if image not found
             img.onerror = function() {
-                this.src = 'https://via.placeholder.com/1000';
+                this.src = 'https://via.placeholder.com/1000x1000';
             };
 
             // Create emoji overlay
