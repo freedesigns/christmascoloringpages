@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         for (let i = imagesLoaded; i < endIndex; i++) {
             const imgFilename = imageFilenames[i];
-            const imgSrc = `img/${imgFilename}`;
+            const imgSrc = `images/${imgFilename}`;
 
             // Preload image
             await preloadImage(imgSrc);
